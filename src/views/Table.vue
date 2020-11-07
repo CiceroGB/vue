@@ -1,181 +1,74 @@
 <template>
-  <v-container
-    id="regular-tables"
-    fluid
-    tag="section"
-    class="px-5 py-3"
-  >
-
-    
-      <v-simple-table>
-        <thead>
-          <tr>
-            <th class="primary--text">
-              ID
-            </th>
-            <th class="primary--text">
-              Name
-            </th>
-            <th class="primary--text">
-              Country
-            </th>
-            <th class="primary--text">
-              City
-            </th>
-            <th class="text-right primary--text">
-              Salary
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Dakota Rice</td>
-            <td>Niger</td>
-            <td>Oud-Turnhout</td>
-            <td class="text-right">
-              $36,738
-            </td>
-          </tr>
-
-          <tr>
-            <td>2</td>
-            <td>Minverva Hooper</td>
-            <td>Curaçao</td>
-            <td>Sinaas-Waas</td>
-            <td class="text-right">
-              $23,789
-            </td>
-          </tr>
-
-          <tr>
-            <td>3</td>
-            <td>Sage Rodriguez</td>
-            <td>Netherlands</td>
-            <td>Baileux</td>
-            <td class="text-right">
-              $56,142
-            </td>
-          </tr>
-
-          <tr>
-            <td>4</td>
-            <td>Philip Chaney</td>
-            <td>Korea, South</td>
-            <td>Overland Park</td>
-            <td class="text-right">
-              $38,735
-            </td>
-          </tr>
-
-          <tr>
-            <td>5</td>
-            <td>Doris Greene</td>
-            <td>Malawi</td>
-            <td>Feldkirchen in Kärnten</td>
-            <td class="text-right">
-              $63,542
-            </td>
-          </tr>
-
-          <tr>
-            <td>6</td>
-            <td>Mason Porter</td>
-            <td>Chile</td>
-            <td>Gloucester</td>
-            <td class="text-right">
-              $78,615
-            </td>
-          </tr>
-        </tbody>
-      </v-simple-table>
-   
-
-    <div class="py-3" />
-
-    <base-material-card
-      color="success"
-      dark
-      icon="mdi-clipboard-plus"
-      title="Table on Dark Background"
-      class="px-5 py-3"
+  <v-container id="regular-tables" fluid tag="section">
+    <v-container fluid>
+      <section class="mb-12 text-center">
+        <h1 class="font-weight-light mb-2 headline">{{ $route.name }}</h1>
+      </section>
+      <v-row align="center">
+        <v-col class="d-flex" cols="12" sm="4">
+          <v-select
+            :items="choices"
+            @change="changeMonth"
+            label="Selecione o mês"
+          ></v-select>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-data-table
+      :headers="headers"
+      :items="ipca"
+      :items-per-page="5"
+      class="elevation-1"
     >
-      <v-simple-table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Country</th>
-            <th>City</th>
-            <th class="text-right">
-              Salary
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Dakota Rice</td>
-            <td>Niger</td>
-            <td>Oud-Turnhout</td>
-            <td class="text-right">
-              $36,738
-            </td>
-          </tr>
-
-          <tr>
-            <td>2</td>
-            <td>Minverva Hooper</td>
-            <td>Curaçao</td>
-            <td>Sinaas-Waas</td>
-            <td class="text-right">
-              $23,789
-            </td>
-          </tr>
-
-          <tr>
-            <td>3</td>
-            <td>Sage Rodriguez</td>
-            <td>Netherlands</td>
-            <td>Baileux</td>
-            <td class="text-right">
-              $56,142
-            </td>
-          </tr>
-
-          <tr>
-            <td>4</td>
-            <td>Philip Chaney</td>
-            <td>Korea, South</td>
-            <td>Overland Park</td>
-            <td class="text-right">
-              $38,735
-            </td>
-          </tr>
-
-          <tr>
-            <td>5</td>
-            <td>Doris Greene</td>
-            <td>Malawi</td>
-            <td>Feldkirchen in Kärnten</td>
-            <td class="text-right">
-              $63,542
-            </td>
-          </tr>
-
-          <tr>
-            <td>6</td>
-            <td>Mason Porter</td>
-            <td>Chile</td>
-            <td>Gloucester</td>
-            <td class="text-right">
-              $78,615
-            </td>
-          </tr>
-        </tbody>
-      </v-simple-table>
-    </base-material-card>
+      <template v-slot:item.V="{ item }">
+        <span>{{
+          parseFloat(item.V).toFixed(2).replace("NaN", "-").replace(".", ",")
+        }}</span>
+      </template>
+    </v-data-table>
   </v-container>
 </template>
+
+<script>
+import api from "../service/api";
+export default {
+  data() {
+    return {
+      ipca: [],
+      headers: [
+        { text: "Variável", value: "D2N" },
+        { text: "Grupo", value: "D4N" },
+        { text: "Período", value: "D3N" },
+        { text: "Variação %", value: "V" },
+      ],
+      choices: [
+        "janeiro",
+        "fevereiro",
+        "março",
+        "abril",
+        "maio",
+        "junho",
+        "julho",
+        "agosto",
+        "setembro",
+        "outubro",
+        "novembro",
+        "dezembro",
+      ],
+    };
+  },
+  methods: {
+    changeMonth(selectObj) {
+      console.log(selectObj);
+    },
+  },
+
+  mounted() {
+    api.get("").then((res) => {
+      const ary = res.data;
+      ary.map((item) => console.log(item.NC));
+      this.ipca = ary.filter((item) => item.D4N === "Índice geral");
+    });
+  },
+};
+</script>
