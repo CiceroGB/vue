@@ -1,6 +1,6 @@
 <template>
-  <nav>
-    <v-navigation-drawer dark app expand-on-hover mini-variant class="indigo darken-2">
+  <v-card>
+    <v-navigation-drawer dark app expand-on-hover permanent class="indigo darken-2">
       <v-list>
         <v-list-item class="px-2">
           <v-list-item-avatar>
@@ -44,5 +44,5 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-  </nav>
+   </v-card>
 </template>
