@@ -36,7 +36,7 @@
         :items-per-page="5"
         class="elevation-1"
       >
-        <template v-slot:item.V="{ item }">
+        <template v-slot:[`item.V`]="{ item }">
           <span>{{
             parseFloat(item.V).toFixed(2).replace("NaN", "-").replace(".", ",")
           }}</span>
@@ -44,11 +44,19 @@
         <template v-slot:top> </template>
         <template v-slot:expanded-item="{}">
           <td :colspan="5">
-            <v-data-table
-              :headers="headers"
+            <v-data-table class= "blue-grey lighten-5"
+              :headers="headers"  
               :items="ipcaChildrens"
               :hide-default-footer="true"
             >
+              <template v-slot:[`item.V`]="{ item }">
+                <span>{{
+                  parseFloat(item.V)
+                    .toFixed(2)
+                    .replace("NaN", "-")
+                    .replace(".", ",")
+                }}</span>
+              </template>
             </v-data-table>
           </td>
         </template>
@@ -97,9 +105,12 @@ export default {
     changeDate(selectObj) {
       console.log(selectObj);
     },
-    async loadDetails({ item }) {
-      console.log(item);
-      this.ipcaChildrens = await this.ipcaAll.filter((itemMap) => itemMap.D3N === item.D3N);
+    loadDetails({ item }) {
+      console.log(item.D2N);
+      let ary = [];
+      ary = this.ipcaAll.filter((itemMap) => itemMap.D2N === item.D2N);
+      ary = ary.filter((item) => item.D4N !== "Índice geral");
+      this.ipcaChildrens = ary.filter((itemMap) => itemMap.D3N === item.D3N);
     },
   },
 
