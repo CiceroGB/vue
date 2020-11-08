@@ -1,7 +1,7 @@
 <template>
-  <v-container id="regular-tables" fluid tag="section">
+  <v-container fluid tag="section">
     <v-container fluid>
-      <section class="mb-12 text-center">
+      <section class="text-center">
         <h1 class="font-weight-light mb-2 headline">{{ $route.name }}</h1>
       </section>
       <v-row align="center">
@@ -14,7 +14,7 @@
           ></v-select>
         </v-col>
         <v-col class="d-flex justify-end" cols="12" sm="8">
-          <download-csv :data="ipca">
+          <download-csv :data="ipcaAll">
             <v-btn color="success" class="mr-6">
               dados CSV
               <i class="mdi mdi-export-variant" aria-hidden="true"></i>
@@ -75,7 +75,6 @@
 </template>
 
 <script>
-import api from "../service/api";
 export default {
   data() {
     return {
@@ -113,14 +112,19 @@ export default {
     },
   },
 
+  computed: {
+    lists() {
+      return this.$store.getters.allLists;
+    },
+  },
+
   async mounted() {
-    await api.get("").then((res) => {
-      this.ipcaAll = res.data;
-      this.ipcaAll = this.ipcaAll.filter((item) => item.D3C !== "Mês (Código)");
-      let i = 0;
-      this.ipcaAll = this.ipcaAll.map((obj) => ({ ...obj, subId: i++ }));
-      this.ipca = this.ipcaAll.filter((item) => item.D4N === "Índice geral");
-    });
+    if (this.lists.length === 0) {
+      await this.$store.dispatch("getLists");
+    }
+
+    this.ipcaAll = this.lists;
+    this.ipca = this.ipcaAll.filter((item) => item.D4N === "Índice geral");
 
     const lastDate = this.ipcaAll.reduce((prev, current) =>
       prev.D3C > current.D3C ? prev.D3N : current.D3N

@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-navigation-drawer dark app  permanent class="indigo darken-2">
+    <v-navigation-drawer dark app permanent class="indigo darken-2">
       <v-list>
         <v-list-item class="px-2">
           <v-list-item-avatar>
@@ -12,7 +12,7 @@
           <v-list-item-content>
             <v-list-item-title class="title"> IPCA </v-list-item-title>
             <v-list-item-subtitle
-              >Índice Nacional de Preços <br/>ao Consumidor
+              >Índice Nacional de Preços <br />ao Consumidor
               Amplo</v-list-item-subtitle
             >
           </v-list-item-content>
@@ -22,19 +22,19 @@
       <v-divider></v-divider>
 
       <v-list nav dense>
-        <v-list-item route to = "/">
+        <v-list-item route to="/">
           <v-list-item-icon>
             <v-icon>fas fa-window-restore</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Dashboard</v-list-item-title>
         </v-list-item>
-        <v-list-item route to = "/tabela/">
+        <v-list-item route to="/tabela/">
           <v-list-item-icon>
             <v-icon>fas fa-table</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Tabela</v-list-item-title>
         </v-list-item>
-        <v-list-item route to = "/grafico">
+        <v-list-item route to="/grafico">
           <v-list-item-icon>
             <v-icon>fas fa-chart-line</v-icon>
           </v-list-item-icon>
@@ -42,5 +42,5 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-   </nav>
+  </nav>
 </template>

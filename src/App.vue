@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Topbar />
+    <!-- <Topbar /> -->
     <Navbar />
     <v-main class="grey lighten-5">
       <router-view></router-view>
@@ -10,18 +10,16 @@
 
 <script>
 import Navbar from "./components/Navbar";
-import Topbar from "./components/Topbar";
+// import Topbar from "./components/Topbar";
 
 export default {
   name: "App",
 
   components: {
-    Topbar,
+    // Topbar,
     Navbar,
   },
 
-  data: () => ({
-    //
-  }),
+  data: () => ({}),
 };
 </script>
