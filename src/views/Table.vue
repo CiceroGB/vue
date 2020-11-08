@@ -8,9 +8,9 @@
         <v-col class="d-flex" cols="12" sm="4">
           <v-select
             v-model="input.lastDate"
-            :items="choices"
+            :items="selectedDate"
             @change="changeDate"
-            label="Selecione o mês"
+            label="Selecione o período"
           ></v-select>
         </v-col>
       </v-row>
@@ -44,8 +44,9 @@
         <template v-slot:top> </template>
         <template v-slot:expanded-item="{}">
           <td :colspan="5">
-            <v-data-table class= "blue-grey lighten-5"
-              :headers="headers"  
+            <v-data-table
+              class="blue-grey lighten-5"
+              :headers="headers"
               :items="ipcaChildrens"
               :hide-default-footer="true"
             >
@@ -83,22 +84,9 @@ export default {
         { text: "Variação %", value: "V" },
       ],
       input: {
-        lastMonth: "dezembro",
+        lastDate: "",
       },
-      choices: [
-        "janeiro",
-        "fevereiro",
-        "março",
-        "abril",
-        "maio",
-        "junho",
-        "julho",
-        "agosto",
-        "setembro",
-        "outubro",
-        "novembro",
-        "dezembro",
-      ],
+      selectedDate: [],
     };
   },
   methods: {
@@ -106,7 +94,6 @@ export default {
       console.log(selectObj);
     },
     loadDetails({ item }) {
-      console.log(item.D2N);
       let ary = [];
       ary = this.ipcaAll.filter((itemMap) => itemMap.D2N === item.D2N);
       ary = ary.filter((item) => item.D4N !== "Índice geral");
@@ -114,12 +101,31 @@ export default {
     },
   },
 
-  mounted() {
-    api.get("").then((res) => {
+  async mounted() {
+    await api.get("").then((res) => {
       this.ipcaAll = res.data;
-      this.ipcaAll.map((item) => console.log(item.NC));
+      this.ipcaAll = this.ipcaAll.filter((item) => item.D3C !== "Mês (Código)");
+      // this.ipcaAll.map((item) => console.log(item.NC));
       this.ipca = this.ipcaAll.filter((item) => item.D4N === "Índice geral");
     });
+
+    const lastDate = this.ipcaAll.reduce((prev, current) =>
+      prev.D3C > current.D3C ? prev.D3N : current.D3N
+    );
+
+    this.input.lastDate = lastDate;
+
+    this.selectedDate = this.ipcaAll.reduce((prev, current) => {
+      const x = prev.find((item) => item.D3C === current.D3C);
+      if (!x) {
+        return prev.concat([current]);
+      } else {
+        return prev;
+      }
+    }, []);
+    this.selectedDate.sort((a, b) => parseFloat(b.D3C) - parseFloat(a.D3C));
+
+    this.selectedDate = this.selectedDate.map((item) => item.D3N);
   },
 };
 </script>
