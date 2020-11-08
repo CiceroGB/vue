@@ -6,7 +6,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 const state = {
-    lists: []
+    lists: [],
+    dates: []
 }
 
 const actions = {
@@ -21,11 +22,31 @@ const mutations = {
         let i = 0;
         lists = lists.map((obj) => ({ ...obj, subId: i++ }));
         state.lists = lists
-    }
+
+        let date = lists.reduce((prev, current) => {
+            const x = prev.find((item) => item.D3C === current.D3C);
+            if (!x) {
+                return prev.concat([current]);
+            } else {
+                return prev;
+            }
+        }, []);
+        date = date.sort((a, b) => parseFloat(b.D3C) - parseFloat(a.D3C));
+
+
+        date = date.map((item) => item.D3N);
+
+        state.dates = date
+
+
+    },
+
+
 }
 
 const getters = {
-    allLists: (state) => state.lists
+    allLists: (state) => state.lists,
+    allDates: (state) => state.dates
 }
 
 export default new Vuex.Store({

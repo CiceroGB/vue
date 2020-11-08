@@ -116,6 +116,9 @@ export default {
     lists() {
       return this.$store.getters.allLists;
     },
+    dates() {
+      return this.$store.getters.allDates;
+    },
   },
 
   async mounted() {
@@ -132,17 +135,7 @@ export default {
 
     this.input.lastDate = lastDate;
 
-    this.selectedDate = this.ipcaAll.reduce((prev, current) => {
-      const x = prev.find((item) => item.D3C === current.D3C);
-      if (!x) {
-        return prev.concat([current]);
-      } else {
-        return prev;
-      }
-    }, []);
-    this.selectedDate.sort((a, b) => parseFloat(b.D3C) - parseFloat(a.D3C));
-
-    this.selectedDate = this.selectedDate.map((item) => item.D3N);
+    this.selectedDate = this.dates
 
     this.selectedDate.unshift("todos");
 

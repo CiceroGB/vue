@@ -7,25 +7,38 @@
       <v-row align="center">
         <v-col class="d-flex" sm="3">
           <v-select
-            v-model="select.itemsVariable"
-            :items="select.valueVariable"
+            v-model="select.valueVariable"
+            :items="select.itemsVariable"
             attach
+            @change="chageVariacao"
             label="Variação"
             multiple
           ></v-select>
         </v-col>
         <v-col class="d-flex" sm="3">
           <v-select
-            v-model="select.itemsGroup"
-            :items="select.valueGroup"
+            v-model="select.valueGroup"
+            :items="select.itemsGroup"
+            @change="chageGroup"
             label="Grupo"
           ></v-select>
         </v-col>
         <v-col class="d-flex" sm="3">
-          <v-select label="Data final"></v-select>
+          <v-select
+            v-model="selectedDatesInitial"
+            :items="datesInitial"
+            @change="chageInitialDate"
+            class=""
+            label="Data Inicial"
+          ></v-select>
         </v-col>
         <v-col class="d-flex" sm="3">
-          <v-select label="Data final"></v-select>
+          <v-select
+            v-model="selectedDatesFinal"
+            :items="datesFinal"
+            @change="chageFinalDate"
+            label="Data final"
+          ></v-select>
         </v-col>
 
         <v-card class="mx-auto my-12" max-width="1000">
@@ -52,92 +65,109 @@ export default {
       select: {
         itemsVariable: ["Mensal", "Anual", "12 meses", "Peso no mês"],
         valueVariable: ["Mensal", "Anual", "12 meses", "Peso no mês"],
-        itemsGroup: ["Mensal", "Anual", "12 meses", "Peso no mês"],
-        valueGroup: ["Mensal", "Anual", "12 meses", "Peso no mês"],
+        itemsGroup: [],
+        valueGroup: "Índice geral",
       },
-
+      selectedDatesInitial: "",
+      selectedDatesFinal: [],
+      selectedItemsVariable: [],
+      selectedItemsGroup: [],
+      ipcaAll: [],
+      datesAll: [],
+      datesInitial: [],
+      datesFinal: [],
+      chart: {
+        toolbar: {
+          show: false,
+        },
+      },
       chartOptions: {
+        chart: {
+          toolbar: {
+            show: false,
+          },
+        },
         xaxis: {
-          categories: [
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-            "janeiro  2019",
-          ],
+          categories: ["janeiro  2019"],
         },
       },
       series: [
         {
           name: "series-1",
-          data: [
-            30,
-            40,
-            35,
-            50,
-            49,
-            60,
-            70,
-            91,
-            30,
-            40,
-            35,
-            50,
-            49,
-            60,
-            70,
-            91,
-          ],
+          data: [30],
         },
         {
           name: "series-2",
-          data: [
-            10,
-            50,
-            55,
-            80,
-            89,
-            70,
-            80,
-            81,
-            30,
-            40,
-            35,
-            50,
-            49,
-            60,
-            70,
-            91,
-          ],
+          data: [10],
         },
       ],
     };
+  },
+
+  methods: {
+    chageVariacao(selectObj) {
+      console.log(selectObj);
+    },
+    chageGroup(selectObj) {
+      console.log(selectObj);
+    },
+    chageInitialDate(selectObj) {
+      const indexFinal = this.datesAll.indexOf(selectObj);
+      const indexInicial = this.datesAll.indexOf(this.selectedDatesInitial);
+
+      if (indexInicial > indexFinal) {
+        this.selectedDatesFinal = this.dates[indexFinal];
+      }
+      this.datesFinal = this.dates.filter(
+        (item) => this.dates.indexOf(item) <= indexFinal
+      );
+    },
+    chageFinalDate(selectObj) {
+      const indexFinal = this.datesAll.indexOf(selectObj);
+      const indexInicial = this.datesAll.indexOf(this.selectedDatesInitial);
+
+      if (indexInicial < indexFinal) {
+        this.selectedDatesInitial = this.dates[indexFinal];
+      }
+      this.datesInitial = this.dates.filter(
+        (item) => this.dates.indexOf(item) >= indexFinal
+      );
+    },
+
+    reChart() {},
   },
 
   computed: {
     lists() {
       return this.$store.getters.allLists;
     },
+    dates() {
+      return this.$store.getters.allDates;
+    },
   },
   async mounted() {
     if (this.lists.length === 0) {
       await this.$store.dispatch("getLists");
     }
-    
 
+    this.ipcaAll = this.lists;
+    this.select.itemsGroup = this.ipcaAll.reduce((prev, current) => {
+      const x = prev.find((item) => item.D4N === current.D4N);
+      if (!x) {
+        return prev.concat([current]);
+      } else {
+        return prev;
+      }
+    }, []);
 
+    this.select.itemsGroup = this.select.itemsGroup.map((item) => item.D4N);
 
+    this.datesAll = this.dates;
+    this.datesInitial = this.dates;
+    this.datesFinal = this.dates;
+
+    this.selectedDatesInitial = this.dates[6];
+    this.selectedDatesFinal = this.dates[0];
   },
 };
 </script>
