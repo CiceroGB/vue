@@ -30,7 +30,7 @@
         :items="ipca"
         :search="search"
         :expanded.sync="expanded"
-        item-key="D3N"
+        item-key="subId"
         show-expand
         @item-expanded="loadDetails"
         :items-per-page="5"
@@ -91,8 +91,12 @@ export default {
   },
   methods: {
     changeDate(selectObj) {
-      console.log(selectObj);
+      this.ipca = this.ipcaAll.filter((item) => item.D4N === "Índice geral");
+      if (selectObj !== "todos") {
+        this.ipca = this.ipca.filter((item) => item.D3N === selectObj);
+      }
     },
+
     loadDetails({ item }) {
       let ary = [];
       ary = this.ipcaAll.filter((itemMap) => itemMap.D2N === item.D2N);
@@ -105,7 +109,8 @@ export default {
     await api.get("").then((res) => {
       this.ipcaAll = res.data;
       this.ipcaAll = this.ipcaAll.filter((item) => item.D3C !== "Mês (Código)");
-      // this.ipcaAll.map((item) => console.log(item.NC));
+      let i = 0;
+      this.ipcaAll = this.ipcaAll.map((obj) => ({ ...obj, subId: i++ }));
       this.ipca = this.ipcaAll.filter((item) => item.D4N === "Índice geral");
     });
 
@@ -126,6 +131,10 @@ export default {
     this.selectedDate.sort((a, b) => parseFloat(b.D3C) - parseFloat(a.D3C));
 
     this.selectedDate = this.selectedDate.map((item) => item.D3N);
+
+    this.selectedDate.unshift("todos");
+
+    this.ipca = this.ipca.filter((item) => item.D3N === this.input.lastDate);
   },
 };
 </script>
