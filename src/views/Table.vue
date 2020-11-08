@@ -13,6 +13,14 @@
             label="Selecione o período"
           ></v-select>
         </v-col>
+        <v-col class="d-flex justify-end" cols="12" sm="8">
+          <download-csv :data="ipca">
+            <v-btn color="success" class="mr-6">
+              dados CSV
+              <i class="mdi mdi-export-variant" aria-hidden="true"></i>
+            </v-btn>
+          </download-csv>
+        </v-col>
       </v-row>
     </v-container>
     <v-card>
