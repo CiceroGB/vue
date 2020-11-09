@@ -1,28 +1,35 @@
 <template>
-  <div class="dashboard">
-    <h1>dashboard</h1>
-    <h2> implementar com cards"</h2>
-  </div>
+  <v-container fluid tag="section">
+    <section class="text-center">
+      <h1 class="font-weight-light mb-2 headline">{{ $route.name }}</h1>
+    </section>
+    <v-card>
+      <Table />
+    </v-card>
+    <br />
+    <v-card>
+      <Chart />
+    </v-card>
+  </v-container>
 </template>
 
 <script>
+import Table from "../components/Table";
+import Chart from "../components/Chart";
 export default {
-  name: "myStore",
-  data() {
-    return {
-      msg: "Welcome to my Vuex Store",
-    };
-  },
   computed: {
     lists() {
       return this.$store.getters.allLists;
     },
   },
+  components: {
+    Table,
+    Chart,
+  },
   async mounted() {
     if (this.lists.length === 0) {
       await this.$store.dispatch("getLists");
     }
-    console.log(this.lists);
   },
 };
 </script>

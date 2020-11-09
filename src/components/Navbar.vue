@@ -24,19 +24,19 @@
       <v-list nav dense>
         <v-list-item route to="/">
           <v-list-item-icon>
-            <v-icon>fas fa-window-restore</v-icon>
+            <v-icon>mdi-dock-window</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Dashboard</v-list-item-title>
         </v-list-item>
         <v-list-item route to="/tabela/">
           <v-list-item-icon>
-            <v-icon>fas fa-table</v-icon>
+            <v-icon>mdi-table-multiple</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Tabela</v-list-item-title>
         </v-list-item>
         <v-list-item route to="/grafico">
           <v-list-item-icon>
-            <v-icon>fas fa-chart-line</v-icon>
+            <v-icon>mdi-chart-line</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Gráfico</v-list-item-title>
         </v-list-item>
