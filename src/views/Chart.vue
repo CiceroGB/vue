@@ -181,7 +181,7 @@ export default {
       this.series = [];
 
       ary.map((item) => {
-        console.log(variable);
+   
         variable = item;
         arr = this.ipcaFilter.filter((key) => key.D2N === variable);
         arr = arr.sort((a, b) => parseFloat(a.D3C) - parseFloat(b.D3C));
@@ -194,15 +194,9 @@ export default {
           },
         ];
 
-        console.log(seriesFill);
+     
       });
 
-      // console.log(this.ipcaFilter);
-      // console.log(this.select.valueGroup);
-      // console.log(this.select.valueVariable);
-      console.log(seriesFill);
-      console.log(variable);
-      console.log(arr);
     },
   },
 
