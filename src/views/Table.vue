@@ -28,7 +28,7 @@
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Search"
+          label="Localizar"
           single-line
           hide-details
         ></v-text-field>
@@ -38,7 +38,7 @@
         :items="ipca"
         :search="search"
         :expanded.sync="expanded"
-        item-key="subId"
+        item-key="subId"    
         show-expand
         @item-expanded="loadDetails"
         :items-per-page="5"

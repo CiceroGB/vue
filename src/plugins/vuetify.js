@@ -8,7 +8,7 @@ import JsonCSV from 'vue-json-csv';
 import VueApexCharts from 'vue-apexcharts'
 
 Vue.use(Vuetify);
-import pt from 'vuetify/src/locale/pt'
+import pt from '../locale/pt'
 
 Vue.use(VueApexCharts)
 Vue.component('downloadCsv', JsonCSV)
