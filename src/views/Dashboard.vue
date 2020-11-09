@@ -6,7 +6,7 @@
     <v-card>
       <Table />
     </v-card>
-    <br />
+    <br />  
     <v-card>
       <Chart />
     </v-card>

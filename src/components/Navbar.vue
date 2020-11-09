@@ -1,7 +1,26 @@
 <template>
   <nav>
-    <v-navigation-drawer dark app permanent class="indigo darken-2">
+    <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant.sync="mini"
+      dark
+      app
+      permanent
+      class="indigo darken-2"
+    >
       <v-list>
+        <v-list-item class="px-2">
+          <v-list-item-avatar>
+            <v-btn icon @click.stop="mini = !mini">
+              <v-icon>mdi-menu</v-icon>
+            </v-btn>
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title class="title"> IPCA </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item class="px-2">
           <v-list-item-avatar>
             <v-img
@@ -10,7 +29,6 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title class="title"> IPCA </v-list-item-title>
             <v-list-item-subtitle
               >Índice Nacional de Preços <br />ao Consumidor
               Amplo</v-list-item-subtitle
@@ -44,3 +62,14 @@
     </v-navigation-drawer>
   </nav>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      drawer: true,
+      mini: false,
+    };
+  },
+};
+</script>
