@@ -135,9 +135,7 @@ export default {
 
     this.input.lastDate = lastDate;
 
-    this.selectedDate = this.dates
-
-    this.selectedDate.unshift("todos");
+    this.selectedDate = this.dates;
 
     this.ipca = this.ipca.filter((item) => item.D3N === this.input.lastDate);
   },
