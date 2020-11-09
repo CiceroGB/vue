@@ -14,12 +14,12 @@ const routes = [
   },
   {
     path: '/grafico',
-    name: 'Chart',
+    name: 'Gráfico',
     component: Chart
   },
   {
     path: '/tabela',
-    name: 'Table',
+    name: 'Tabela',
     component: Table
   },
 ]

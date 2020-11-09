@@ -64,9 +64,9 @@ export default {
     return {
       select: {
         itemsVariable: ["Mensal", "Anual", "12 meses", "Peso no mês"],
-        valueVariable: ["Mensal", "Anual", "12 meses"],
+        valueVariable: [],
         itemsGroup: [],
-        valueGroup: "Índice geral",
+        valueGroup: "",
       },
       selectedDatesInitial: [],
       selectedDatesFinal: [],
@@ -95,10 +95,12 @@ export default {
   },
 
   methods: {
-    chageVariacao() {
+    chageVariacao(selectObj) {
+      this.$store.dispatch("addChartVar", selectObj);
       this.reChart();
     },
-    chageGroup() {
+    chageGroup(selectObj) {
+      this.$store.dispatch("addChartGroup", selectObj);
       this.reChart();
     },
     chageInitialDate(selectObj) {
@@ -111,6 +113,9 @@ export default {
       this.datesFinal = this.dates.filter(
         (item) => this.dates.indexOf(item) <= indexFinal
       );
+
+      this.$store.dispatch("addChartDateInitial", selectObj);
+
       this.reChart();
     },
     chageFinalDate(selectObj) {
@@ -123,6 +128,9 @@ export default {
       this.datesInitial = this.dates.filter(
         (item) => this.dates.indexOf(item) >= indexFinal
       );
+
+      this.$store.dispatch("addChartDateFinal", selectObj);
+
       this.reChart();
     },
 
@@ -205,6 +213,18 @@ export default {
     dates() {
       return this.$store.getters.allDates;
     },
+    sChartVariable() {
+      return this.$store.getters.chartVar;
+    },
+    sChartGroup() {
+      return this.$store.getters.chartGroup;
+    },
+    sChartDateInitial() {
+      return this.$store.getters.chartDateInitial;
+    },
+    sChartDateFinal() {
+      return this.$store.getters.chartDateFinal;
+    },
   },
   async mounted() {
     if (this.lists.length === 0) {
@@ -227,8 +247,29 @@ export default {
     this.datesInitial = this.dates;
     this.datesFinal = this.dates;
 
-    this.selectedDatesInitial = this.dates[6];
-    this.selectedDatesFinal = this.dates[0];
+    if (this.sChartDateInitial == "") {
+      this.selectedDatesInitial = this.dates[6];
+    } else {
+      this.selectedDatesInitial = this.sChartDateInitial;
+    }
+
+    if (this.sChartDateFinal == "") {
+      this.selectedDatesFinal = this.dates[0];
+    } else {
+      this.selectedDatesFinal = this.sChartDateFinal;
+    }
+
+    if (this.sChartGroup == "") {
+      this.select.valueGroup = "Índice geral";
+    } else {
+      this.select.valueGroup = this.sChartGroup;
+    }
+
+    if (this.sChartVariable.length === 0) {
+      this.select.valueVariable = ["Mensal", "Anual", "12 meses"];
+    } else {
+      this.select.valueVariable = this.sChartVariable;
+    }
 
     this.reChart();
   },

@@ -99,9 +99,10 @@ export default {
   methods: {
     changeDate(selectObj) {
       this.ipca = this.ipcaAll.filter((item) => item.D4N === "Índice geral");
-      if (selectObj !== "todos") {
-        this.ipca = this.ipca.filter((item) => item.D3N === selectObj);
-      }
+
+      this.ipca = this.ipca.filter((item) => item.D3N === selectObj);
+
+      this.$store.dispatch("addSelectedDateTable", selectObj);
     },
 
     loadDetails({ item }) {
@@ -119,6 +120,9 @@ export default {
     dates() {
       return this.$store.getters.allDates;
     },
+    selectedDateTable() {
+      return this.$store.getters.selectedDateTable;
+    },
   },
 
   async mounted() {
@@ -129,11 +133,14 @@ export default {
     this.ipcaAll = this.lists;
     this.ipca = this.ipcaAll.filter((item) => item.D4N === "Índice geral");
 
-    const lastDate = this.ipcaAll.reduce((prev, current) =>
-      prev.D3C > current.D3C ? prev.D3N : current.D3N
-    );
-
-    this.input.lastDate = lastDate;
+    if (this.selectedDateTable == "") {
+      const lastDate = this.ipcaAll.reduce((prev, current) =>
+        prev.D3C > current.D3C ? prev.D3N : current.D3N
+      );
+      this.input.lastDate = lastDate;
+    } else {
+      this.input.lastDate = this.selectedDateTable;
+    }
 
     this.selectedDate = this.dates;
 

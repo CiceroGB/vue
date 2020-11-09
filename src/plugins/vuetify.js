@@ -8,12 +8,26 @@ import JsonCSV from 'vue-json-csv';
 import VueApexCharts from 'vue-apexcharts'
 
 Vue.use(Vuetify);
+import pt from 'vuetify/src/locale/pt'
+
 Vue.use(VueApexCharts)
 Vue.component('downloadCsv', JsonCSV)
 Vue.component('apexchart', VueApexCharts)
 
+Vue.component('v-data-table', {
+    methods: {
+        changeLocale() {
+            this.$vuetify.lang.current = 'pt'
+        },
+    },
+})
+
 export default new Vuetify({
     icons: {
         iconfont: 'md' || 'fa'
+    },
+    lang: {
+        locales: { pt },
+        current: 'pt',
     },
 });
