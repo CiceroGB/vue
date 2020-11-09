@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <h1>dashboard</h1>
-    <h2> implementar com cards"
+    <h2> implementar com cards"</h2>
   </div>
 </template>
 
