@@ -1,56 +1,52 @@
 <template>
   <v-container fluid tag="section">
-      <v-container fluid>
-        <v-row align="center">
-          <v-col class="d-flex" sm="3">
-            <v-select
-              v-model="select.valueVariable"
-              :items="select.itemsVariable"
-              attach
-              @change="chageVariacao"
-              label="Variação"
-              multiple
-            ></v-select>
-          </v-col>
-          <v-col class="d-flex" sm="3">
-            <v-select
-              v-model="select.valueGroup"
-              :items="select.itemsGroup"
-              @change="chageGroup"
-              label="Grupo"
-            ></v-select>
-          </v-col>
-          <v-col class="d-flex" sm="3">
-            <v-select
-              v-model="selectedDatesInitial"
-              :items="datesInitial"
-              @change="chageInitialDate"
-              class=""
-              label="Data Inicial"
-            ></v-select>
-          </v-col>
-          <v-col class="d-flex" sm="3">
-            <v-select
-              v-model="selectedDatesFinal"
-              :items="datesFinal"
-              @change="chageFinalDate"
-              label="Data final"
-            ></v-select>
-          </v-col>
-
-          <v-card class="mx-auto my-12" max-width="1000">
-            <div class="d-flex justify-center">
-              <apexchart
-                width="820"
-                type="line"
-                :options="chartOptions"
-                :series="series"
-              ></apexchart>
-            </div>
-          </v-card>
-        </v-row>
-      </v-container>
-    
+    <v-container fluid>
+      <v-row align="center">
+        <v-col class="d-flex" sm="3">
+          <v-select
+            v-model="select.valueVariable"
+            :items="select.itemsVariable"
+            attach
+            @change="chageVariacao"
+            label="Variação"
+            multiple
+          ></v-select>
+        </v-col>
+        <v-col class="d-flex" sm="3">
+          <v-select
+            v-model="select.valueGroup"
+            :items="select.itemsGroup"
+            @change="chageGroup"
+            label="Grupo"
+          ></v-select>
+        </v-col>
+        <v-col class="d-flex" sm="3">
+          <v-select
+            v-model="selectedDatesInitial"
+            :items="datesInitial"
+            @change="chageInitialDate"
+            class=""
+            label="Data Inicial"
+          ></v-select>
+        </v-col>
+        <v-col class="d-flex" sm="3">
+          <v-select
+            v-model="selectedDatesFinal"
+            :items="datesFinal"
+            @change="chageFinalDate"
+            label="Data final"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-card>
+        <apexchart
+          height="550"
+          type="line"
+          :options="chartOptions"
+          :series="series"
+        ></apexchart>
+      </v-card>
+    </v-container>
   </v-container>
 </template>
 
@@ -74,6 +70,11 @@ export default {
       datesInitial: [],
       datesFinal: [],
       chart: {
+        height: 550,
+        type: "line",
+        zoom: {
+          enabled: false,
+        },
         toolbar: {
           show: false,
         },
