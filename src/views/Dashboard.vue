@@ -3,13 +3,22 @@
     <section class="text-center">
       <h1 class="font-weight-light mb-2 headline">{{ $route.name }}</h1>
     </section>
-    <v-card>
-      <Table />
-    </v-card>
-    <br />  
-    <v-card>
-      <Chart />
-    </v-card>
+    <v-flex align-center justify-center>
+      <v-card class="mx-auto my-12" max-width="1200">
+        <Table />
+      </v-card>
+    </v-flex> 
+    <v-layout align-center justify-center>
+      <v-card max-width="1200">
+        <Chart />
+      </v-card>
+    </v-layout>
+    <br /> <br />
+    <v-layout align-center justify-center>
+      <v-card max-width="1200">
+        <Chart />
+      </v-card>
+    </v-layout>
   </v-container>
 </template>
 

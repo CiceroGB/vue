@@ -12,12 +12,15 @@ const state = {
     chartVar:[],
     chartGroup:"",
     chartDateInitial:"",
-    chartDateFinal:""
+    chartDateFinal:"",
+    chartVarGroup:"",
+    chartDateInitialGroup:"",
+    chartDateFinalGroup:""
 }
 
 const actions = {
     async getLists({ commit }) {
-        await api.get('').then(res => { commit('SET_LISTS', res.data) })
+        await api.get('').then(res => { commit('setList', res.data) })
     },
     addSelectedDateTable(context, value) {
         context.commit("addSelectedDateTable", value);
@@ -33,12 +36,21 @@ const actions = {
     },
     addChartDateFinal(context, value) {
         context.commit("addChartDateFinal", value);
-    }
+    },
+    addChartVarGroup(context, value) {
+        context.commit("addChartVarGroup", value);
+    },
+    addChartDateInitialGroup(context, value) {
+        context.commit("addChartDateInitialGroup", value);
+    },
+    addChartDateFinalGroup(context, value) {
+        context.commit("addChartDateFinalGroup", value);
+    },
 
 }
 
 const mutations = {
-    SET_LISTS(state, lists) {
+    setList(state, lists) {
         lists = lists.filter((item) => item.D3C !== "Mês (Código)");
         let i = 0;
         lists = lists.map((obj) => ({ ...obj, subId: i++ }));
@@ -70,6 +82,15 @@ const mutations = {
     addChartDateFinal(state, value) {
         state.chartDateFinal = value;
     },
+    addChartVarGroup(state, value) {
+        state.chartVarGroup = value;
+    },
+    addChartDateInitialGroup(state, value) {
+        state.chartDateInitialGroup = value;
+    },
+    addChartDateFinalGroup(state, value) {
+        state.chartDateFinalGroup = value;
+    },
 }
 
 const getters = {
@@ -80,6 +101,9 @@ const getters = {
     chartGroup: (state) => state.chartGroup,
     chartDateInitial: (state) => state.chartDateInitial,
     chartDateFinal: (state) => state.chartDateFinal,
+    chartVarGroup: (state) => state.chartVarGroup,
+    chartDateInitialGroup: (state) => state.chartDateInitialGroup,
+    chartDateFinalGroup: (state) => state.chartDateFinalGroup,
 }
 
 export default new Vuex.Store({

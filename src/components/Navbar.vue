@@ -3,6 +3,7 @@
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant.sync="mini"
+      :width="238"
       dark
       app
       permanent
@@ -68,7 +69,7 @@ export default {
   data() {
     return {
       drawer: true,
-      mini: false,
+      mini: true,
     };
   },
 };

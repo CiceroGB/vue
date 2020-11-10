@@ -13,7 +13,7 @@
         <v-col class="d-flex justify-end" cols="12" sm="8">
           <download-csv :data="ipcaAll">
             <v-btn color="success" class="mr-6">
-              dados CSV
+              CSV
               <i class="mdi mdi-export-variant" aria-hidden="true"></i>
             </v-btn>
           </download-csv>
